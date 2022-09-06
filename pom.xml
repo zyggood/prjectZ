@@ -12,6 +12,7 @@
     <modules>
         <module>spark</module>
         <module>FXGL</module>
+        <module>vortex</module>
     </modules>
 
     <properties>
