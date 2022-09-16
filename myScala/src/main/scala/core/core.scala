@@ -1,4 +1,4 @@
-package example.e2048.core
+package core
 
 import scala.collection.mutable.ArrayBuffer
 import scala.io.StdIn
