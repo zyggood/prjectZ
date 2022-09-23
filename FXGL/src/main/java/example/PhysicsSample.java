@@ -3,14 +3,16 @@ package example;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
+import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
  * Shows how to use collision handlers and define hitboxes for entities.
- *
+ * <p>
  * For collisions to work, entities must have:
  * 1. a type
  * 2. a hit box
@@ -26,7 +28,8 @@ public class PhysicsSample extends GameApplication {
     }
 
     @Override
-    protected void initSettings(GameSettings settings) { }
+    protected void initSettings(GameSettings settings) {
+    }
 
     @Override
     protected void initGame() {
@@ -58,10 +61,23 @@ public class PhysicsSample extends GameApplication {
         // the order of entities is determined by
         // the order of their types passed into this method
         FXGL.onCollision(Type.PLAYER, Type.ENEMY, (player, enemy) -> {
-            System.out.println("On Collision");
-            enemy.rotateBy(45);
-            enemy.removeFromWorld();
 
+
+            Point2D playerPosition = player.getPosition();
+            Point2D enemyPosition = enemy.getPosition();
+            if (playerPosition.getX() < enemyPosition.getX()) {
+                if (playerPosition.getY() < enemyPosition.getY()) {
+                    enemy.translate(new Point2D(5, 5));
+                } else {
+                    enemy.translate(new Point2D(5, -5));
+                }
+            } else {
+                if (playerPosition.getY() < enemyPosition.getY()) {
+                    enemy.translate(new Point2D(-5, 5));
+                } else {
+                    enemy.translate(new Point2D(-5, -5));
+                }
+            }
         });
 
         // the above call uses DSL
